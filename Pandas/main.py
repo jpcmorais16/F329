@@ -3,11 +3,11 @@ import pandas as pd
 from matplotlib import pyplot as plt
 import openpyxl
 
-niveis = [0.5, 1, 1.5, 2, 2.5]
+
 
 def CurvaDeNivel(tabela, nome, niveis):
 
-    plt.tricontour(tabela['x'], tabela['y'], tabela['V'], niveis, cmap='winter')
+    plt.tricontourf(tabela['x'], tabela['y'], tabela['V'], niveis, cmap='winter')
 
     plt.colorbar().set_label("DDP(V)")
 
@@ -60,13 +60,13 @@ plt.clf()
 
 # ----------------------- CURVAS DE NIVEL ---------------------------
 
-niveis = [0.5, 1, 1.5, 2, 2.4]
+niveis = [0, 0.28, 0.56, 0.84, 1.12, 1.4, 1.68, 1.96, 2.24, 2.52, 2.60]
 CurvaDeNivel(paralelo, 'paralelo', niveis)
 
-niveis = [0.5, 1, 1.5, 2]
+
 CurvaDeNivel(ponta, 'ponta', niveis)
 
-niveis = [0.5, 1, 1.25, 1.5, 1.75, 2]
+
 CurvaDeNivel(aro, 'aro', niveis)
 
 
