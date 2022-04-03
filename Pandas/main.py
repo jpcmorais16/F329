@@ -1,29 +1,41 @@
-import numpy
+import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
 import openpyxl
+from matplotlib.tri import Triangulation, CubicTriInterpolator
 
+
+def Potencial(x, y, tabela):
+    aux1 = tabela[tabela['x'] == x]
+    aux2 = aux1[tabela['y'] == y]
+    return aux2['V']
 
 
 def CurvaDeNivel(tabela, nome, niveis):
+    jonas = plt.tricontourf(tabela['x'], tabela['y'], tabela['V'], niveis, cmap='winter')
 
-    plt.tricontourf(tabela['x'], tabela['y'], tabela['V'], niveis, cmap='winter')
+    print(jonas.collections)
 
     plt.colorbar().set_label("DDP(V)")
 
     plt.xlabel('X(cm)')
     plt.ylabel('Y(cm)')
 
-
     plt.grid(True)
+
+    triang = Triangulation(tabela['x'], tabela['y'])
+
+
+    tci = CubicTriInterpolator(triang, -tabela['V'])
+
+    (Ex, Ey) = tci.gradient(triang.x, triang.y)
+    E_norm = np.sqrt(Ex ** 2 + Ey ** 2)
+
+    plt.quiver(triang.x, triang.y, Ex / E_norm, Ey / E_norm)
 
     plt.savefig(nome + '.png')
     plt.show()
     plt.clf()
-
-
-
-
 
 
 paralelo = pd.read_excel("planilha.xlsx", "Planilha1")
@@ -45,7 +57,6 @@ plt.scatter(pontaX['y'], pontaX['V'])
 plt.plot(aroX['y'], aroX['V'], label='Aro')
 plt.scatter(aroX['y'], aroX['V'])
 
-
 plt.legend()
 plt.xlabel('Y(cm)')
 plt.ylabel('Diferença de potencial(v)')
@@ -57,16 +68,21 @@ plt.savefig('grafico.png')
 plt.show()
 plt.clf()
 
-
 # ----------------------- CURVAS DE NIVEL ---------------------------
 
-niveis = [0, 0.28, 0.56, 0.84, 1.12, 1.4, 1.68, 1.96, 2.24, 2.52, 2.80]
-CurvaDeNivel(paralelo, 'paralelo', niveis)
+niveis = []
 
+for y in range(1, 19, 2):
+    paraleloY = paralelo[paralelo['y'] == y]
+    print(paraleloY)
+    niveis.append(paraleloY['V'].mean())
+    print(niveis)
+
+niveis.append(0)
+niveis.reverse()
+niveis.append(2.534545454545454)
+CurvaDeNivel(paralelo, 'paralelo', niveis)
 
 CurvaDeNivel(ponta, 'ponta', niveis)
 
-
 CurvaDeNivel(aro, 'aro', niveis)
-
-
