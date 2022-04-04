@@ -4,22 +4,15 @@ from matplotlib import pyplot as plt
 import openpyxl
 from matplotlib.tri import Triangulation, CubicTriInterpolator
 
+def CurvaDeNivel(tabela, nome, niveis, titulo):
+    plt.tricontourf(tabela['x'], tabela['y'], tabela['V'], niveis)
 
-def Potencial(x, y, tabela):
-    aux1 = tabela[tabela['x'] == x]
-    aux2 = aux1[tabela['y'] == y]
-    return aux2['V']
-
-
-def CurvaDeNivel(tabela, nome, niveis):
-    jonas = plt.tricontourf(tabela['x'], tabela['y'], tabela['V'], niveis, cmap='winter')
-
-    print(jonas.collections)
 
     plt.colorbar().set_label("DDP(V)")
 
     plt.xlabel('X(cm)')
     plt.ylabel('Y(cm)')
+    plt.title(titulo)
 
     plt.grid(True)
 
@@ -71,6 +64,8 @@ plt.clf()
 # ----------------------- CURVAS DE NIVEL ---------------------------
 
 niveis = []
+niveis.append(2.534545454545454)
+
 
 for y in range(1, 19, 2):
     paraleloY = paralelo[paralelo['y'] == y]
@@ -80,9 +75,17 @@ for y in range(1, 19, 2):
 
 niveis.append(0)
 niveis.reverse()
-niveis.append(2.534545454545454)
-CurvaDeNivel(paralelo, 'paralelo', niveis)
 
-CurvaDeNivel(ponta, 'ponta', niveis)
+print(len(niveis))
+CurvaDeNivel(paralelo, 'paralelo', niveis, "Placas Paralelas")
 
-CurvaDeNivel(aro, 'aro', niveis)
+CurvaDeNivel(ponta, 'ponta', niveis, "Ponta")
+
+niveisAro = [2.53, 2.3435454545454544,  2.075909090909091,
+              1.7, 1.389, 1.24909090909091,  0.95,
+             0.5890909090909091, 0.3, 0]
+
+niveisAro.reverse()
+
+
+CurvaDeNivel(aro, 'aro', niveisAro, "Aro")

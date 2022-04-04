@@ -1,0 +1,9 @@
+5-i) As equipotenciais são paralelas pela maior parte Há efeitos de bordas, que podem ser notados tanto pelo arredondamento das curvas de nível perto das placas, quanto pela divergência das linhas de campo próximas a uma das bordas e convergências das próximas à outra borda.
+
+5-ii) Longe da ponta, as equipotenciais são praticamente paralelas. Como esperado, o potencial ao redor da ponta fica constante, o que poder ser notado pela alta densidade de equipotenciais nas proximidades.
+
+5-iii) As equipotenciais ficam deformadas. A área de dentro do aro, assim como as proximidades, como esperado, ficam com potencial constante.
+
+
+
+6) Todos os gráficos apresentam simetria bilateral ao longo do eixo y (x=0). Fora o gráfico da ponta, os outros casos também apresentam uma simetria bilateral ao longo do eixo y = 9,5.
