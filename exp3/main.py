@@ -21,16 +21,20 @@ plt.scatter(voltagem, corrente)
 plt.plot(voltagem, corrente)
 plt.xlabel("Tensão (V)")
 plt.ylabel("Corrente (mA)")
-plt.show()
+plt.title("Tensão x Corrente para o resistor")
+plt.grid()
 plt.savefig('5.1 - corrente-voltagem.png')
+plt.show()
 
 plt.scatter(voltagem, resistencia)
 plt.plot(voltagem, resistencia)
 plt.xlabel("Tensão (V)")
 plt.ylabel("Resistência (ohm)")
+plt.title("Tensão x Resistência para o resistor")
 plt.yticks([0,  20,  40,  60,  80,  100, 120, 140])
-plt.show()
+plt.grid()
 plt.savefig('5.1 - resistencia-voltagem.png')
+plt.show()
 
 a, da, b, db = rL.regLin(voltagem, corrente)
 R = 1000 / a
@@ -49,8 +53,10 @@ y = a * x + b
 plt.plot(x, y)
 plt.xlabel("Tensão (V)")
 plt.ylabel("Corrente (mA)")
-plt.show()
+plt.title("Regressão Linear Tensão x Corrente para o resistor")
+plt.grid()
 plt.savefig("7.1 - RegLin Corrente - Voltagem.png")
+plt.show()
 
 
 
@@ -58,21 +64,42 @@ plt.savefig("7.1 - RegLin Corrente - Voltagem.png")
 
 
 diodo = pd.read_excel('Dados.xlsx', sheet_name='Diodo')
-diodo = diodo[diodo['Voltímetro (V)'] > -1]
+diodoPositivo = diodo[diodo['Voltímetro (V)'] > 0]
+diodoNegativo = diodo[diodo['Voltímetro (V)'] < 0]
 
-voltagem = diodo['Voltímetro (V)']
-corrente = diodo['Amperímetro']
-resistencia = diodo['Resistência (ohm)']
-lnResistencia = diodo['lnR']
+voltagem = diodoPositivo['Voltímetro (V)']
+corrente = diodoPositivo['Amperímetro']
+resistencia = diodoPositivo['Resistência (ohm)']
+lnResistencia = diodoPositivo['lnR']
 
 
 plt.scatter(voltagem, corrente)
 plt.plot(voltagem, corrente)
 plt.xlabel("Tensão (V)")
 plt.ylabel("Corrente (mA)")
+plt.title("Corrente x Tensão para polaridade normal do diodo")
+plt.grid()
 #plt.xticks([-10, -5, 0, 0.5, 1, 1.5])
-plt.show()
 plt.savefig('3.2 - corrente-voltagem.png')
+plt.show()
+
+voltagem = diodoNegativo['Voltímetro (V)']
+corrente = diodoNegativo['Amperímetro']
+resistencia = diodoNegativo['Resistência (ohm)']
+lnResistencia = diodoNegativo['lnR']
+
+plt.scatter(voltagem, corrente)
+plt.plot(voltagem, corrente)
+plt.xlabel("Tensão (V)")
+plt.ylabel("Corrente (mA)")
+plt.title("Tensão x Corrente para polaridade reversa do diodo")
+#plt.xticks([-10, -5, 0, 0.5, 1, 1.5])
+plt.grid()
+plt.savefig("3.2 - corrente-voltagemReversa.png")
+plt.show()
+
+
+
 
 
 diodo = pd.read_excel('Planilha.xlsx', sheet_name='Página1')
@@ -82,25 +109,31 @@ corrente = diodo['Amperímetro']
 resistencia = diodo['Resistência (ohm)']
 lnResistencia = diodo['lnR']
 lnCorrente = diodo['lnI']
+logV = diodo['logV']
+logI = diodo['logI']
+logR = diodo['logR']
 
 
-plt.scatter(voltagem, resistencia)
-plt.plot(voltagem, resistencia)
-plt.xlabel("Tensão (V)")
-plt.ylabel("Resistência (ohm)")
-plt.xscale("log")
-plt.yscale("log")
-plt.show()
+# USAR LOG
+plt.scatter(logV, logR)
+plt.plot(logV, logR)
+plt.xlabel("Log da Tensão ")
+plt.ylabel("Log da Resistência (ohm)")
+plt.title("Log da Tensão x Log da Resistência para o diodo em polaridade normal")
+plt.grid()
 plt.savefig('4.2 - resistencia-voltagem.png')
+plt.show()
 
 
 plt.scatter(voltagem, lnCorrente)
 plt.plot(voltagem, lnCorrente)
 plt.xlabel("Tensão (V)")
 plt.ylabel("Logaritmo Neperiano da Corrente")
+plt.title("Tensão x LN da Corrente para o diodo em polaridade normal")
 #plt.xscale("log")
-plt.show()
+plt.grid()
 plt.savefig('8.2 - LNcorrente-voltagem.png')
+plt.show()
 
 
 """resistor = pd.read_excel('Dados.xlsx', sheet_name='Resistor')

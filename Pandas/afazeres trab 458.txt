@@ -1,0 +1,7 @@
+ordenar linhas matriz
+
+pegar pares a,b
+
+ordenar pares a,b
+
+trocar a por b em busca do minimo

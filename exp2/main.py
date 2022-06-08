@@ -3,35 +3,66 @@ import pandas as pd
 from matplotlib import pyplot as plt
 import openpyxl
 from scipy import odr
+import RegressaoLinear as rL
 
-dados = pd.read_excel("planilha.xlsx", "Planilha1")
+dados = pd.read_excel('Dados_exp_2.xlsx', sheet_name='Planilha1')
 
-fQuadrada = dados['frequência'] ** 2
-corrente = dados['corrente']
+colunaX = 'Corrente (mA)'
+colunaY = 'f2'
 
+x = dados[colunaX]
+y = dados[colunaY]
 
-plt.scatter(corrente, fQuadrada)
+plt.xlabel('Corrente (mA)')
+plt.ylabel('Frequência ao Quadrado (Hz^2)')
 
-data = odr.RealData(corrente, fQuadrada)
-odreg = odr.ODR(data, odr.models.unilinear)
-odreg.set_job(fit_type=2) # muda para mínimos quadrados
-ans = odreg.run()
+plt.xticks([-250, -200, -150, -100, -75, -50, -25, 0, 25, 50, 75, 100, 150, 200, 250])
 
+plt.scatter(x, y)
+plt.savefig('Grafico.png')
+#plt.show()
+plt.clf()
 
-a, b = ans.beta
-da, db = ans.sd_beta
-
-print(f'coef. angular = ({a}+-{da})')
-print(f'coef. linear = ({b}+-{db})')
-
-rotulo = 'Regressão Linear'
+# --------------------------------------------------------------------------------------
 
 
-# monta os limites para desenho da reta
-X = np.linspace(min(corrente), max(fQuadrada), num=200)
+positivos = dados[dados[colunaX] >= -11.58]
+x = positivos[colunaX]
+y = positivos[colunaY]
+
+a, da, b, db = rL.regLin(x, y)
+print(a, da, b, db)
+
+X = x
 Y = a * X + b
-# e faz o gráfico dela atrá dos pontos
-plt.plot(X, Y, color='red', alpha=0.4, label=rotulo)
-# para exibir as legendas do gráfico
-plt.legend()
+# --------------------------------------------------------------------------------------
 
+negativos = dados[dados[colunaX] < -11.58]
+w = negativos[colunaX]
+z = negativos[colunaY]
+
+c, dc, d, dd = rL.regLin(w, z)
+
+print(c, dc, d, dd)
+
+
+W = w
+Z = c * W + d
+
+t = plt.plot(X, Y, color='red', alpha=0.4)
+plt.plot(W, Z, color='red', alpha=0.4)
+
+plt.scatter(w, z, color='blue')
+plt.scatter(x, y, color='blue')
+
+plt.grid()
+plt.xticks([-240, -200, -150, -100,  -50,  0,  50,  100, 150, 200, 240])
+plt.yticks([0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4])
+
+plt.xlabel('Corrente (mA)')
+plt.ylabel('Frequência ao Quadrado (Hz^2)')
+plt.title('Frequência ao quadrado x Corrente')
+
+
+plt.savefig('Grafico.png')
+plt.show()

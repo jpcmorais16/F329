@@ -31,6 +31,18 @@ def CurvaDeNivel(tabela, nome, niveis, titulo):
     plt.clf()
 
 
+def incerteza(tabela, cor):
+    dV = tabela['INCERTEZA']
+    plt.errorbar(
+
+        tabela['y'], tabela['V'], yerr=dV,
+        fmt='o', elinewidth=2 / 3, capsize=2, capthick=2 / 3, color=cor,
+        zorder=10
+
+
+
+    )
+
 paralelo = pd.read_excel("planilha.xlsx", "Planilha1")
 ponta = pd.read_excel("planilha.xlsx", "Planilha2")
 aro = pd.read_excel("planilha.xlsx", "Planilha3")
@@ -41,19 +53,24 @@ paraleloX = paralelo[paralelo['x'] == 0]
 aroX = aro[aro['x'] == 0]
 pontaX = ponta[ponta['x'] == 0]
 
-plt.scatter(paraleloX['y'], paraleloX['V'], color='red')
+
+
+
+
+
 plt.plot(paraleloX['y'], paraleloX['V'], color='red', alpha=0.6, label='Placas Paralelas')
+incerteza(paraleloX, 'red')
 
-plt.plot(pontaX['y'], pontaX['V'], label='Ponta')
-plt.scatter(pontaX['y'], pontaX['V'])
+plt.plot(pontaX['y'], pontaX['V'], label='Ponta', color='blue')
+incerteza(pontaX, 'blue')
 
-plt.plot(aroX['y'], aroX['V'], label='Aro')
-plt.scatter(aroX['y'], aroX['V'])
+plt.plot(aroX['y'], aroX['V'], label='Aro', color='orange')
+incerteza(aroX, 'orange')
 
 plt.legend()
 plt.xlabel('Y(cm)')
 plt.ylabel('Diferença de potencial(v)')
-plt.title('Diferença de potencial vs Coordenada Y')
+plt.title('Diferença de potencial vs Coordenada Y no eixo de simetria')
 
 plt.grid(True)
 
@@ -77,9 +94,9 @@ niveis.append(0)
 niveis.reverse()
 
 print(len(niveis))
-CurvaDeNivel(paralelo, 'paralelo', niveis, "Placas Paralelas")
+CurvaDeNivel(paralelo, 'paralelo', niveis, "Curvas de nível e vetores do campo elétrico - Placas Paralelas")
 
-CurvaDeNivel(ponta, 'ponta', niveis, "Ponta")
+CurvaDeNivel(ponta, 'ponta', niveis, "Curvas de nível e vetores do campo elétrico - Ponta")
 
 niveisAro = [2.53, 2.3435454545454544,  2.075909090909091,
               1.7, 1.389, 1.24909090909091,  0.95,
@@ -88,4 +105,4 @@ niveisAro = [2.53, 2.3435454545454544,  2.075909090909091,
 niveisAro.reverse()
 
 
-CurvaDeNivel(aro, 'aro', niveisAro, "Aro")
+CurvaDeNivel(aro, 'aro', niveisAro, "Curvas de nível e vetores do campo elétrico - Aro")

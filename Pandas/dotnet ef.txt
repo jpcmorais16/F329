@@ -1,0 +1,4 @@
+ver os negocio de intercambio e teste de proficiencia
+
+dotnet ef migrations add <nome>
+dotnet ef database update
