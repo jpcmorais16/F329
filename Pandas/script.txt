@@ -1,0 +1,5 @@
+Dados_exp_2.xlsx
+Planilha1
+Corrente (mA)
+f2
+

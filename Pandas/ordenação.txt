@@ -1,0 +1,11 @@
+Após o primeiro sort do vetor de tamanho, digamos, t, sabemos que os t/3 maiores elementos do vetor 2Aini/3 estão no subvetor do meio.
+
+
+Após o segundo sort, os maiores elementos de t estão no ultimo subvetor, pois todos os elementos do subvetor do meio, antes do sort2, eram maiores ou iguais aos elementos do subvetor do inicio.
+Sort2 irá levar os maiores elementos tanto do subvetor do meio, que ja eram maiores que os do inicio, quanto os maiores elementos do subvetor final(antes do sort) para o subvetor final(depois do sort). Ou seja, os menores elementos de 2Afim/3 estão no subvetor do meio. Todos os elementos de 2Aini/3 são menores ou iguais a qualquer elemento do subvetor final.
+
+
+O terceiro sort levará os t/3 menores elementos de 2Aini/3, que são necessariamente os t/3 menores elementos de A, para o subvetor inicial, o que deixa o subvetor do meio com os t/3 maiores elementos de 2Aini/3, que são, por causa de sort2, necessariamente menores ou iguais que qualquer elemento do subvetor do final.
+
+
+ 

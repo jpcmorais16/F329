@@ -7,7 +7,7 @@ from matplotlib import pyplot as plt
 
 
 
-def func(name, title, valor):
+def func(name, title, valor, arquivo):
     dados = pd.read_excel("Planilha sem título.xlsx", sheet_name=name)
 
     df = dados.drop(0)
@@ -18,6 +18,13 @@ def func(name, title, valor):
 
 
     a, da, b, db = rL.regLin(time, soundPressure)
+
+    arquivo.write("\n\n" + title + "\n\n")
+    arquivo.write("a: {}\n".format(a))
+    arquivo.write("da: {}\n".format(da))
+    arquivo.write("b: {}\n".format(b))
+    arquivo.write("db: {}\n".format(db))
+
     #print(a, da, b, db)
     #constante = np.log10(np.e)*np.log10(20)/np.log(-a)
     #print(constante)
@@ -41,8 +48,13 @@ def func(name, title, valor):
     plt.clf()
 
 
-func("4.7,1000", "Resistência 4700ohm com um capacitor", 1)
-func('1,1000', "Resistência de 1000ohm com um capacitor", 1)
-func('1,2000', "Resistência de 1000ohm com dois capacitores em paralelo", 1)
-func('10,2000', "Resistência de 10000ohm com dois capacitores em paralelo", 1)
-func('10,1000', "Resistência de 10000ohm com um capacitor", 1)
+arquivo = open('coeficientes.txt', "w")
+
+
+func("4.7,1000", "Resistência 4700ohm com um capacitor", 1, arquivo)
+func('1,1000', "Resistência de 1000ohm com um capacitor", 1, arquivo)
+func('1,2000', "Resistência de 1000ohm com dois capacitores em paralelo", 1, arquivo)
+func('10,2000', "Resistência de 10000ohm com dois capacitores em paralelo", 1, arquivo)
+func('10,1000', "Resistência de 10000ohm com um capacitor", 1, arquivo)
+
+arquivo.close()
