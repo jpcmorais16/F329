@@ -18,12 +18,14 @@ def func(name, title, valor, arquivo):
 
 
     a, da, b, db = rL.regLin(time, soundPressure)
+    constante = -20/(a*np.log(10))
 
     arquivo.write("\n\n" + title + "\n\n")
     arquivo.write("a: {}\n".format(a))
     arquivo.write("da: {}\n".format(da))
     arquivo.write("b: {}\n".format(b))
     arquivo.write("db: {}\n".format(db))
+    arquivo.write("constante: {}\n".format(constante))
 
     #print(a, da, b, db)
     #constante = np.log10(np.e)*np.log10(20)/np.log(-a)
