@@ -21,10 +21,14 @@ def func(sheetName, title, valor):
         #print(time[i])
 
     a, da, b, db = rL.regLin(time, soundPressure)
-    #print(a, da, b, db)
-    constante = np.log10(np.e)*np.log10(20)/np.log(-a)
-    #print(constante)
-    print(constante/valor)
+    constante = -20/(a*np.log(10))
+
+    arquivo.write("\n\n" + title + "\n\n")
+    arquivo.write("a: {}\n".format(a))
+    arquivo.write("da: {}\n".format(da))
+    arquivo.write("b: {}\n".format(b))
+    arquivo.write("db: {}\n".format(db))
+    arquivo.write("constante: {}\n".format(constante))
 
     x = time
     y = a * x + b
@@ -44,6 +48,7 @@ def func(sheetName, title, valor):
     plt.clf()
 
 
+arquivo = open('coeficientes2.txt', "w")
 
 
 func("Circ 1K","Circ 1K", 1000 + 518)
@@ -51,3 +56,5 @@ func("Circ 1K série","Circ 1K série", 1000 + 518)
 func("Circ 4.7K", "Circ 4.7K", 4700 + 518)
 func("Circ 10K", "Circ 10K", 10000 + 518)
 func("Circ 10K série", "Circ 10K série", 10000 + 518)
+
+arquivo.close()
